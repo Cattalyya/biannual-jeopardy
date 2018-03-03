@@ -80,11 +80,11 @@
      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
        <div class="modal-dialog" role="document">
          <div class="modal-content">
-           <div class="modal-header" style="height: 60px">
-             <h5 class="modal-title" id="exampleModalLongTitle">Title
+           <!-- <div class="modal-header" style="height: 60px"> -->
+             <!-- <h5 class="modal-title" id="exampleModalLongTitle">Title -->
              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button> -->
-             </h5>
-           </div>
+             <!-- </h5> -->
+           <!-- </div> -->
            <div class="modal-body">
              Loading ...
            </div>
@@ -119,6 +119,23 @@
       }
   }
 
+	function getQuestionSlide(r, c) {
+		var slide_number = ((c * 3 + r) * 2 + 1).toString();
+		if (slide_number < 10) {
+			slide_number = "0" + slide_number;
+		}
+		return slide_number
+	}
+
+	function getAnswerSlide(r, c) {
+		var slide_number = ((c * 3 + r) * 2 + 2).toString();
+		if (slide_number < 10) {
+			slide_number = "0" + slide_number;
+		}
+		return slide_number
+	}
+
+
   function prepareQuestion(element) {
       curr_cell = element;
       var targetModal = $($(element).attr('data-target')); //$(element).attr('data-target')
@@ -129,15 +146,19 @@
       console.log("target modal: ", targetModal);
       console.log("choose topic: ", topic);
 
-      targetModal.find(".modal-title")[0].innerHTML = topic;
-      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r];
+      // targetModal.find(".modal-title")[0].innerHTML = topic;
+      // targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r];
+			targetModal.find(".modal-body")[0].innerHTML = "<img src='slides/Slide" + getQuestionSlide(curr_r, curr_c) + ".jpg' style='height: 600px;'/>";
   }
 
   function getAnswer(element) {
       var targetModal = $($(curr_cell).attr('data-target'));
       var topic = topics[curr_c];
 
-      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r] +"<br/>" + answers[topic][curr_r];
+      // targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r] +"<br/>" + answers[topic][curr_r];
+			// targetModal.find(".modal-body")[0].innerHTML += "<br/>" + answers[topic][curr_r];
+			targetModal.find(".modal-body")[0].innerHTML = "<img src='slides/Slide" + getAnswerSlide(curr_r, curr_c) + ".jpg' style='height: 600px;'/>";
+
       console.log("with ans: ", targetModal.find(".modal-body")[0].innerHTML);
   }
 
@@ -151,10 +172,10 @@
           currCell.setAttribute("r", r.toString());
           currCell.setAttribute("c", c.toString());
           currCell.setAttribute("type", "button");
-          // currCell.setAttribute("data-toggle", "modal");
-          // currCell.setAttribute("data-target", "#exampleModalLong");
-          currCell.setAttribute("onclick", "toggleColor(this);");
-          // currCell.setAttribute("onclick", "toggleColor(this); prepareQuestion(this)");
+          currCell.setAttribute("data-toggle", "modal");
+          currCell.setAttribute("data-target", "#exampleModalLong");
+          // currCell.setAttribute("onclick", "toggleColor(this);");
+          currCell.setAttribute("onclick", "toggleColor(this); prepareQuestion(this)");
           currCell.innerHTML = scores[r].toString();
         }
       }
@@ -174,7 +195,7 @@
 
     // Science & Technology
     questions[topics[1]] = ["Science?", "Tech?"];
-    answers[topics[1]] = ["I don't know.<br/><img src='img/sample.jpg' style='width:300px'/>", "Another answers"];
+    answers[topics[1]] = ["I don't know.<br/><img src='img/sample.jpg' style='width:10'/>", "Another answers"];
 
     console.log("Questions: ", questions);
     console.log("Answers: ", answers);
