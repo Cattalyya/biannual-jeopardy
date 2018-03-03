@@ -151,9 +151,10 @@
           currCell.setAttribute("r", r.toString());
           currCell.setAttribute("c", c.toString());
           currCell.setAttribute("type", "button");
-          currCell.setAttribute("data-toggle", "modal");
-          currCell.setAttribute("data-target", "#exampleModalLong");
-          currCell.setAttribute("onclick", "toggleColor(this); prepareQuestion(this)");
+          // currCell.setAttribute("data-toggle", "modal");
+          // currCell.setAttribute("data-target", "#exampleModalLong");
+          currCell.setAttribute("onclick", "toggleColor(this);");
+          // currCell.setAttribute("onclick", "toggleColor(this); prepareQuestion(this)");
           currCell.innerHTML = scores[r].toString();
         }
       }
