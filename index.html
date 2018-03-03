@@ -35,7 +35,7 @@
   <br/>
    <table class="table table-responsive table-bordered">
        <thead>
-         <tr>
+         <tr id="topicsRow">
            <th>First Name</th>
            <th>Last Name</th>
            <th>Username</th>
@@ -45,75 +45,33 @@
            <th>Username</th>
          </tr>
        </thead>
-       <tbody>
+       <tbody id="challengesRows">
          <tr>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
          </tr>
          <tr>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
          </tr>
          <tr>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
-           <td class="bg-success" type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong" onclick="toggleColor(this)">
-             Test Question
-           </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
          </tr>
        </tbody>
 </table>
@@ -123,17 +81,17 @@
        <div class="modal-dialog" role="document">
          <div class="modal-content">
            <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+             <h5 class="modal-title" id="exampleModalLongTitle">Title</h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
              </button>
            </div>
            <div class="modal-body">
-             ...
+             Loading ...
            </div>
            <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             <button type="button" class="btn btn-primary">Save changes</button>
+             <button type="button" class="btn btn-primary" onclick="getAnswer(this)">Answer</button>
            </div>
          </div>
        </div>
@@ -143,16 +101,84 @@
 
 <script>
 
+
+  var topics = ["Sports", "Science & Technology", "Books", "Games & Comics", "Travel & Geography", "Fashion & Entertainment", "ถอดรหัส"];
+  var scores = ["10", "20", "30"];
+  var questions = {};
+  var answers = {};
+  var curr_r = -1, curr_c = -1, curr_cell = null;
+  var NUM_COLS = 7;
+
   function toggleColor(element) {
       var currClass =   $(element).attr('class');
       var AVAILABLE_CELL_CLASS = 'bg-success';
       var UNAVAILABLE_CELL_CLASS = 'bg-danger';
-      console.log(currClass);
       if (currClass == AVAILABLE_CELL_CLASS) {
         $(element).attr('class', UNAVAILABLE_CELL_CLASS);
       } else {
         $(element).attr('class', AVAILABLE_CELL_CLASS);
       }
+  }
+
+  function prepareQuestion(element) {
+      curr_cell = element;
+      var targetModal = $($(element).attr('data-target')); //$(element).attr('data-target')
+      curr_r = parseInt($(element).attr('r'));
+      curr_c = parseInt($(element).attr('c'));
+      var topic = topics[curr_r];
+
+      console.log("target modal: ", targetModal);
+      console.log("choose topic: ", topic);
+
+      targetModal.find(".modal-title")[0].innerHTML = topics[curr_r];
+      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_c];
+  }
+
+  function getAnswer(element) {
+      var targetModal = $($(curr_cell).attr('data-target'));
+      var topic = topics[curr_r];
+
+      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_c] +"<br/>" + answers[topic][curr_c];
+      console.log("with ans: ", targetModal.find(".modal-body")[0].innerHTML);
+  }
+
+  function initializeTable() {
+      var challengesRows = $("#challengesRows").children();
+      for (var r = 0; r < challengesRows.length; r ++) {
+        var cells = $(challengesRows[r]).children();
+        for (var c = 0; c < NUM_COLS; c ++) {
+          var currCell = cells[c];
+          currCell.setAttribute("class", "bg-success");
+          currCell.setAttribute("r", r.toString());
+          currCell.setAttribute("c", c.toString());
+          currCell.setAttribute("type", "button");
+          currCell.setAttribute("data-toggle", "modal");
+          currCell.setAttribute("data-target", "#exampleModalLong");
+          currCell.setAttribute("onclick", "toggleColor(this); prepareQuestion(this)");
+          currCell.innerHTML = scores[r].toString();
+        }
+      }
+  }
+
+  window.onload = function () {
+    var topics_columns = $("#topicsRow").children();
+    console.log("Topics: ", topics);
+    for (var i = 0; i < topics_columns.length; i++) {
+      topics_columns[i].innerHTML = topics[i];
+      questions[topics[i]] = [];
+      answers[topics[i]] = [];
+    }
+    // Sport
+    questions[topics[0]] = ["Which contry win the winter olympic 2017?", "Another sport question?"];
+    answers[topics[0]] = ["I don't know.", "Another answers"];
+
+    // Science & Technology
+    questions[topics[1]] = ["Science?", "Tech?"];
+    answers[topics[1]] = ["I don't know.", "Another answers"];
+
+    console.log("Questions: ", questions);
+    console.log("Answers: ", answers);
+    initializeTable();
   }
 </script>
 </body>
