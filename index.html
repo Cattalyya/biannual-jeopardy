@@ -24,8 +24,8 @@
 	<!-- <link rel="stylesheet" href="css/main.css"> -->
 
 	<!-- Google font -->
- 	<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Questrial">
+ 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Questrial">
+ 	<link rel="stylesheet" type="text/css" href="css/main.css">
 
 </head>
  <body>
@@ -33,16 +33,16 @@
 <div class="container" style="margin-top:40px" >
    <h1>Jeopardy Game - TSMIT Biannual 2018</h1>
   <br/>
-   <table class="table table-responsive table-bordered">
+   <table class="table table-responsive table-bordered" style="table-layout: fixed;">
        <thead>
          <tr id="topicsRow">
-           <th>First Name</th>
-           <th>Last Name</th>
-           <th>Username</th>
-           <th>First Name</th>
-           <th>Last Name</th>
-           <th>Username</th>
-           <th>Username</th>
+           <th style="width: 14.28%">Topic 1</th>
+           <th style="width: 14.28%">Topic 2</th>
+           <th style="width: 14.28%">Topic 3</th>
+           <th style="width: 14.28%">Topic 4</th>
+           <th style="width: 14.28%">Topic 5</th>
+           <th style="width: 14.28%">Topic 6</th>
+           <th>Topic 7</th>
          </tr>
        </thead>
        <tbody id="challengesRows">
@@ -80,11 +80,10 @@
      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
        <div class="modal-dialog" role="document">
          <div class="modal-content">
-           <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLongTitle">Title</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-             </button>
+           <div class="modal-header" style="height: 60px">
+             <h5 class="modal-title" id="exampleModalLongTitle">Title
+             <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button> -->
+             </h5>
            </div>
            <div class="modal-body">
              Loading ...
@@ -125,20 +124,20 @@
       var targetModal = $($(element).attr('data-target')); //$(element).attr('data-target')
       curr_r = parseInt($(element).attr('r'));
       curr_c = parseInt($(element).attr('c'));
-      var topic = topics[curr_r];
+      var topic = topics[curr_c];
 
       console.log("target modal: ", targetModal);
       console.log("choose topic: ", topic);
 
-      targetModal.find(".modal-title")[0].innerHTML = topics[curr_r];
-      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_c];
+      targetModal.find(".modal-title")[0].innerHTML = topic;
+      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r];
   }
 
   function getAnswer(element) {
       var targetModal = $($(curr_cell).attr('data-target'));
-      var topic = topics[curr_r];
+      var topic = topics[curr_c];
 
-      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_c] +"<br/>" + answers[topic][curr_c];
+      targetModal.find(".modal-body")[0].innerHTML = questions[topic][curr_r] +"<br/>" + answers[topic][curr_r];
       console.log("with ans: ", targetModal.find(".modal-body")[0].innerHTML);
   }
 
@@ -174,7 +173,7 @@
 
     // Science & Technology
     questions[topics[1]] = ["Science?", "Tech?"];
-    answers[topics[1]] = ["I don't know.", "Another answers"];
+    answers[topics[1]] = ["I don't know.<br/><img src='img/sample.jpg' style='width:300px'/>", "Another answers"];
 
     console.log("Questions: ", questions);
     console.log("Answers: ", answers);

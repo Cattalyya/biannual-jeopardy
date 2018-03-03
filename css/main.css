@@ -1,0 +1,22 @@
+td {
+  font-size: 40px;
+  text-align: center;
+}
+
+th {
+  font-size: 25px;
+  width: 14.28%;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.table-bordered td, .table-bordered th{
+  border-color: #bbbcb7 !important;
+  border-width: medium !important;
+}
+
+
+.modal-body, .modal-title {
+
+    font-size: 25px;
+}
